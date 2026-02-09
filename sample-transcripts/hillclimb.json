@@ -1,0 +1,72 @@
+[
+  {
+    "speaker": "Designer",
+    "text": "Thanks for meeting with me today. I'd love to learn more about your company. Can you start by telling me what you do?",
+    "timestamp": "00:00"
+  },
+  {
+    "speaker": "Naren",
+    "text": "Of course! We're HillClimb. We provide domain-agnostic AI data services specifically designed for research labs and scientific institutions.",
+    "timestamp": "00:15"
+  },
+  {
+    "speaker": "Designer",
+    "text": "Interesting. What makes you different from other data service providers?",
+    "timestamp": "00:30"
+  },
+  {
+    "speaker": "Naren",
+    "text": "Great question. Most data services are built for enterprise or consumer applications. We focus exclusively on scientific research. We understand the unique data requirements of labs - the precision, the reproducibility, the complex data structures that come with experimental data.",
+    "timestamp": "00:45"
+  },
+  {
+    "speaker": "Designer",
+    "text": "Can you tell me more about your typical customers?",
+    "timestamp": "01:15"
+  },
+  {
+    "speaker": "Naren",
+    "text": "We work with university research labs, private research institutions, and R&D departments at biotech and pharma companies. Our customers are scientists and researchers who need to manage, process, and analyze large volumes of experimental data.",
+    "timestamp": "01:30"
+  },
+  {
+    "speaker": "Designer",
+    "text": "What words would you use to describe your brand personality?",
+    "timestamp": "02:00"
+  },
+  {
+    "speaker": "Naren",
+    "text": "Precise. Trustworthy. Scientific but approachable. We want to be seen as a reliable partner in the research process - technically excellent but not intimidating. We're helping scientists do their best work.",
+    "timestamp": "02:15"
+  },
+  {
+    "speaker": "Designer",
+    "text": "Any visual preferences or styles you're drawn to?",
+    "timestamp": "02:45"
+  },
+  {
+    "speaker": "Naren",
+    "text": "We like clean, modern design. Nothing too flashy or corporate. We want something that feels smart and sophisticated but still warm and human. We're not a cold tech company - we're partners in discovery.",
+    "timestamp": "03:00"
+  },
+  {
+    "speaker": "Designer",
+    "text": "Anything you definitely don't want in the logo?",
+    "timestamp": "03:30"
+  },
+  {
+    "speaker": "Naren",
+    "text": "Please no generic tech cliches - no circuit boards, no abstract swooshes, no globes. Also nothing that looks like a biotech or pharma company specifically. We're domain-agnostic, remember. We serve all types of research.",
+    "timestamp": "03:45"
+  },
+  {
+    "speaker": "Designer",
+    "text": "The name HillClimb is interesting. Is there a story behind it?",
+    "timestamp": "04:15"
+  },
+  {
+    "speaker": "Naren",
+    "text": "It's actually a reference to optimization algorithms - hill climbing is a technique for finding optimal solutions by iteratively improving. It represents our approach: continuous improvement, always climbing toward better outcomes. Plus there's a sense of ambition and progress in the imagery.",
+    "timestamp": "04:30"
+  }
+]
