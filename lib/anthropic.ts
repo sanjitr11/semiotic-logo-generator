@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { BrandAnalysis, ClaudeLogoResponse, LogoType, Transcript } from "./types";
-import { TRANSCRIPT_ANALYSIS_PROMPT, getLogoPrompt } from "./prompts";
+import { TRANSCRIPT_ANALYSIS_PROMPT, LOGO_GENERATION_SYSTEM_PROMPT, getLogoPrompt } from "./prompts";
 
 // Lazy initialization for Anthropic client
 let _anthropic: Anthropic | null = null;
@@ -53,7 +53,7 @@ export async function analyzeTranscript(transcript: Transcript): Promise<BrandAn
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
       const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-5-20250929",
         max_tokens: 2048,
         messages: [
           {
@@ -91,17 +91,19 @@ export async function analyzeTranscript(transcript: Transcript): Promise<BrandAn
 
 export async function generateLogo(
   logoType: LogoType,
-  brandAnalysis: BrandAnalysis
+  brandAnalysis: BrandAnalysis,
+  variant: number = 1
 ): Promise<ClaudeLogoResponse> {
   const anthropic = getAnthropicClient();
-  const prompt = getLogoPrompt(logoType, brandAnalysis);
+  const prompt = getLogoPrompt(logoType, brandAnalysis, variant);
   let lastError: Error | null = null;
 
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     try {
       const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 4096,
+        model: "claude-sonnet-4-5-20250929",
+        max_tokens: 8192,
+        system: LOGO_GENERATION_SYSTEM_PROMPT,
         messages: [
           {
             role: "user",
@@ -128,10 +130,9 @@ export async function generateLogo(
         throw new Error("Invalid SVG in response");
       }
 
-      // Clean up SVG - ensure proper quotes
+      // Clean up SVG - ensure proper quotes (only in attributes, not text content)
       logoResponse.svg = logoResponse.svg
-        .replace(/'/g, '"')
-        .replace(/\n\s*/g, " ")
+        .replace(/<([^>]*)'/g, (match) => match.replace(/'/g, '"'))
         .trim();
 
       return logoResponse;

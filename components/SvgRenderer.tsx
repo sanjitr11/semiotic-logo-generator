@@ -8,42 +8,63 @@ interface SvgRendererProps {
   size?: number;
 }
 
-export function SvgRenderer({ svgCode, className = "", size = 300 }: SvgRendererProps) {
-  // Sanitize and prepare SVG for rendering
-  const sanitizedSvg = React.useMemo(() => {
-    // Ensure SVG has proper attributes
-    let svg = svgCode.trim();
+function prepareSvg(svgCode: string): string {
+  let svg = svgCode.trim();
 
-    // If SVG doesn't have xmlns, add it
-    if (!svg.includes("xmlns=")) {
-      svg = svg.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
-    }
+  // Add xmlns if missing
+  if (!svg.includes("xmlns=")) {
+    svg = svg.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
 
-    return svg;
-  }, [svgCode]);
+  // Remove any existing width/height so the SVG scales to its container
+  svg = svg.replace(/<svg([^>]*)>/, (match, attrs) => {
+    const cleaned = attrs
+      .replace(/\bwidth\s*=\s*["'][^"']*["']/g, "")
+      .replace(/\bheight\s*=\s*["'][^"']*["']/g, "");
+    return `<svg${cleaned}>`;
+  });
+
+  // Ensure preserveAspectRatio for proper scaling
+  if (!svg.includes("preserveAspectRatio")) {
+    svg = svg.replace("<svg", '<svg preserveAspectRatio="xMidYMid meet"');
+  }
+
+  return svg;
+}
+
+export function SvgRenderer({ svgCode, className = "", size }: SvgRendererProps) {
+  const sanitizedSvg = React.useMemo(() => prepareSvg(svgCode), [svgCode]);
 
   return (
     <div
-      className={`bg-white rounded-lg flex items-center justify-center overflow-hidden ${className}`}
-      style={{ width: size, height: size }}
+      className={`bg-white rounded-lg overflow-hidden ${className}`}
+      style={size ? { width: size, height: size } : undefined}
     >
       <div
-        className="w-full h-full flex items-center justify-center p-4"
-        dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
-      />
+        className="w-full h-full p-4"
+        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <div
+          className="w-full h-full"
+          style={{ display: "block" }}
+          dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
+        />
+      </div>
     </div>
   );
 }
 
 export function SvgThumbnail({ svgCode, size = 80 }: { svgCode: string; size?: number }) {
+  const sanitizedSvg = React.useMemo(() => prepareSvg(svgCode), [svgCode]);
+
   return (
     <div
-      className="bg-white rounded flex items-center justify-center overflow-hidden"
+      className="bg-white rounded overflow-hidden"
       style={{ width: size, height: size }}
     >
       <div
-        className="w-full h-full flex items-center justify-center p-1"
-        dangerouslySetInnerHTML={{ __html: svgCode }}
+        className="w-full h-full p-1"
+        dangerouslySetInnerHTML={{ __html: sanitizedSvg }}
       />
     </div>
   );

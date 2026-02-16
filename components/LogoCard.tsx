@@ -63,7 +63,7 @@ export function LogoCard({
     >
       {/* SVG Display */}
       <div className="relative group">
-        <SvgRenderer svgCode={concept.svgCode} className="w-full aspect-square" size={400} />
+        <SvgRenderer svgCode={concept.svgCode} className="w-full aspect-square" />
 
         {/* Overlay actions */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
